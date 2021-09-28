@@ -1,0 +1,25 @@
+services:
+- type: web
+  name: gitpod-openvscode-server
+  env: docker
+  repo: https://github.com/render-examples/gitpod-openvscode-server.git
+  disk:
+    name: data
+    mountPath: /home/workspace
+    sizeGB: 1
+- type: web
+  name: secure-oauth-server
+  env: docker
+  repo: https://github.com/render-examples/oauth2-proxy
+  envVars:
+  # Use placeholders for sensitive data to allow Client information to be entered securely in the Render dashboard
+    - key: OAUTH2_PROXY_UPSTREAMS
+      fromService:
+        type: pserv
+        name: gitpod-openvscode-server
+    - key: OAUTH2_PROXY_CLIENT_ID
+      sync: false
+    - key: OAUTH2_PROXY_CLIENT_SECRET
+      sync: false
+    - key: OAUTH2_PROXY_PROVIDER
+      sync: false
