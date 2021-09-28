@@ -12,11 +12,12 @@ services:
   env: docker
   repo: https://github.com/render-examples/oauth2-proxy
   envVars:
-  # Use placeholders for sensitive data to allow Client information to be entered securely in the Render dashboard
-    - key: OAUTH2_PROXY_UPSTREAMS
+  # Grab the OpenVSCode service address for use as upstream endpoint
+    - key: UPSTREAM_SERVICE
       fromService:
         type: pserv
         name: gitpod-openvscode-server
+  # Use placeholders for sensitive data to allow Client information to be entered securely in the Render dashboard
     - key: OAUTH2_PROXY_CLIENT_ID
       sync: false
     - key: OAUTH2_PROXY_CLIENT_SECRET
